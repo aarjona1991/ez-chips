@@ -32,7 +32,7 @@ function ChipItem({
           className="chip-item-close"
           onClick={() => handleChipClose(hiding, animateExit, onCloseItem, setHiding)}
         >&times;</span>
-        {item.text}
+        {item.label}
     </span>
   );
 }

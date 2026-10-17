@@ -1,5 +1,4 @@
 import { OptionsType } from "../Options/options";
-import { ItemType } from "../Item/Item";
 
 export type HandleInputChange = (
     setInputValue: (inputValue: string) => void,
@@ -15,7 +14,7 @@ export type HandleInputKeyDown = (
 
 export type HandleCloseItem = (
     options: OptionsType,
-    text: string
+    label: string
 ) => void;
 
 export type HandleAnimationEnd = (
@@ -35,3 +34,8 @@ export type GetChipItemClassName = (
     animate: boolean | undefined,
     hiding: boolean
 ) => string;
+
+export type HandleDuplicate = (
+    options: OptionsType,
+    label: string
+) => boolean;

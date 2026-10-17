@@ -2,7 +2,7 @@
 
 Editable text chips for React. `ez-chips` publishes one component, `ChipContainer`, plus the TypeScript types for its props.
 
-**0.1.0.** The public API is still in development. Until 1.0.0, breaking changes ship in minor versions.
+**0.2.0.** This version replaces the 0.1.0 item shape and callbacks. Each item requires an `id`, and `id` is the React key. `onCloseItem` and `animateChipItem` are gone. Use `onRemove` and `animate`. The public API is still in development. Until 1.0.0, breaking changes ship in minor versions.
 
 ## Installation
 
@@ -16,7 +16,7 @@ The component imports its own stylesheet. The app bundler must allow CSS imports
 
 ## Usage
 
-The list is controlled. Store `items` in state and pass the next list back from `onChange` and `onCloseItem`.
+The list is controlled. Store `items` in state and pass the next list back from `onChange`.
 
 ```tsx
 import { useState } from "react";
@@ -25,8 +25,8 @@ import type { ItemType } from "ez-chips";
 
 export function Tags() {
   const [items, setItems] = useState<ItemType[]>([
-    { text: "React" },
-    { text: "TypeScript" },
+    { id: "react", label: "React" },
+    { id: "ts", label: "TypeScript" },
   ]);
 
   return (
@@ -34,15 +34,16 @@ export function Tags() {
       placeholder="Add a tag"
       items={items}
       onChange={setItems}
-      onCloseItem={setItems}
     />
   );
 }
 ```
 
-Press Enter to add the input text as a chip. Blank text is ignored. The stored label keeps its surrounding spaces. Click the close mark to remove a chip. `text` is the React key, so each label in the list has to be unique. This version does not reject a duplicate.
+Press Enter to add the input text as a chip. Blank text is ignored. The stored `label` keeps its surrounding spaces. The component generates the new item `id`. An exact `label` match is rejected, and the input is left in place.
 
-Each `ChipContainer` animates only its own changes. A chip that is added to that list bounces in. The chip that is closed shrinks out, and the list updates when that animation finishes. Chips already in `items` when the component mounts do not animate, and one list does not trigger the animations of another. Set `animateChipItem={false}` on a container to disable both animations for that instance.
+Click the close mark to remove a chip. Removal calls `onChange` with the next list and, when passed, `onRemove(item, items)` with the removed item first. `setItems` fits `onChange`. It does not fit `onRemove`, because the first argument is the item.
+
+Each `ChipContainer` animates only its own changes. A chip that is added to that list bounces in. The chip that is closed shrinks out, and the list updates when that animation finishes. Chips already in `items` when the component mounts do not animate, and one list does not trigger the animations of another. Set `animate={false}` on a container to disable both animations for that instance.
 
 ## API
 
@@ -50,17 +51,24 @@ Each `ChipContainer` animates only its own changes. A chip that is added to that
 | --- | --- | --- | --- |
 | `items` | `ItemType[]` | yes | Chips to render |
 | `onChange` | `(items: ItemType[]) => void` | yes | Next list after a chip is added or removed |
-| `onCloseItem` | `(items: ItemType[], item: ItemType) => void` | yes | Called when a chip finishes closing, with the next list and the removed item |
+| `onRemove` | `(item: ItemType, items: ItemType[]) => void` | no | Called after a chip is removed, with the removed item and the next list |
 | `placeholder` | `string` | no | Input placeholder. Defaults to `Add a new item` |
-| `animateChipItem` | `boolean` | no | Enter and exit animations for this container only. Defaults to `true` |
+| `animate` | `boolean` | no | Enter and exit animations for this container only. Defaults to `true` |
+| `disabled` | `boolean` | no | Accepted by the type. This version does not apply it |
+| `readOnly` | `boolean` | no | Accepted by the type. This version does not apply it |
+| `maxItems` | `number` | no | Accepted by the type. This version does not apply it |
+| `allowDuplicates` | `boolean` | no | Accepted by the type. This version always rejects an exact `label` match |
+| `className` | `string` | no | Accepted by the type. This version does not write it to the DOM |
+| `addKey` | `string[]` | no | Accepted by the type. Defaults to Enter. This version adds on Enter |
 
-`setItems` can be passed to `onCloseItem`. React state setters ignore the extra item argument.
+`disabled`, `readOnly`, `maxItems`, `allowDuplicates`, `className`, and `addKey` are part of the 0.2.0 contract so callers can type them now. Applying them is later work.
 
 Each item is an `ItemType`:
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `text` | `string` | yes | Chip label |
+| `id` | `number \| string` | yes | Stable identity and React key |
+| `label` | `string` | yes | Chip label |
 | `color` | `string` | no | Text color for this chip. Any CSS color |
 | `background` | `string` | no | Background color for this chip. Any CSS color |
 
