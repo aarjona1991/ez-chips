@@ -4,6 +4,12 @@ export type OptionsType = {
     placeholder?: string
     items: Array<ItemType>
     onChange: (items: Array<ItemType>) => void
-    onCloseItem: (items: Array<ItemType>, item: ItemType) => void
-    animateChipItem?: boolean
+    onRemove?: (item: ItemType, items: Array<ItemType>) => void
+    animate?: boolean
+    disabled?: boolean
+    readOnly?: boolean
+    maxItems?: number
+    allowDuplicates?: boolean
+    className?: string
+    addKey?: Array<string> | ["Enter"]
 }

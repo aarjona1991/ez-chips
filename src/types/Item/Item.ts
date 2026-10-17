@@ -1,6 +1,6 @@
 export type ItemType = {
-    text: string,
+    id: number | string,
+    label: string,
     color?: string,
-    animate?: boolean,
     background?: string
 }
