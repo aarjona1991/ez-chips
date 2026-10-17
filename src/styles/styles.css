@@ -1,0 +1,106 @@
+.chip-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chip-container .chip-item {
+    position: relative;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: var(--ez-chips-background, #f0f0f0);
+    color: var(--ez-chips-color, #333);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+        background-color: var(--ez-chips-background-hover, var(--ez-chips-background, #e0e0e0));
+    }
+}
+
+.chip-container .chip-item-close {
+    position: absolute;
+    right: -4px;
+    top: -5px;
+    width: 16px;
+    height: 16px;
+    color: var(--ez-chips-close-color, #333);
+    background-color: var(--ez-chips-close-background, #e0e0e0);
+    box-shadow: 0 1px 6px #0000005c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+        background-color: var(--ez-chips-close-background-hover, #d0d0d0);
+    }
+}
+
+.chip-container input {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #cccccc00;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+        border-color: #e0e0e000;
+    }
+    &:focus {
+        border-color: #e0e0e000;
+        outline: none;
+    }
+    &:active {
+        border-color: #e0e0e000;
+        outline: none;
+    }
+    &:focus-visible {
+        border-color: #e0e0e000;
+        outline: none;
+    }
+    &:focus-within {
+        border-color: #e0e0e000;
+        outline: none;
+    }
+    &:focus-within {
+        border-color: #e0e0e000;
+        outline: none;
+    }
+}
+
+@keyframes chip-item-show-bounce {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes chip-item-hide-explode {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+.chip-container .chip-item-hide-explode {
+    animation: chip-item-hide-explode 0.3s ease-in-out forwards;
+}
+
+.chip-container .chip-item-show-bounce {
+    animation: chip-item-show-bounce 0.3s ease-in-out;
+}
